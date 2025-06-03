@@ -13,7 +13,10 @@
     h1 {
       color: #333;
     }
-    .cta-button {
+    .hidden {
+      display: none;
+    }
+    .cta-button, .submit-button {
       display: block;
       width: 80%;
       max-width: 500px;
@@ -27,8 +30,15 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    .cta-button:hover {
+    .cta-button:hover, .submit-button:hover {
       background-color: #0056b3;
+    }
+    input {
+      padding: 0.5em;
+      font-size: 1em;
+      margin: 0.5em;
+      width: 80%;
+      max-width: 400px;
     }
     #log {
       margin-top: 2em;
@@ -40,38 +50,63 @@
 <body>
   <h1>Start Your Supplement Trial Journey</h1>
 
-  <button class="cta-button" onclick="trackClick('Start Trial')">
-    Start Your Supplement Trial Today – Discover How We Can Validate Your Claims
-  </button>
-  <button class="cta-button" onclick="trackClick('Free Consultation')">
-    Request a Free Consultation on Designing a Clinical Trial for Your Product
-  </button>
-  <button class="cta-button" onclick="trackClick('Schedule Strategy Session')">
-    Need Human Data? Schedule a Trial Design Strategy Session Now
-  </button>
-  <button class="cta-button" onclick="trackClick('Talk to Director')">
-    Talk to a Study Director About Your Supplement's Clinical Potential
-  </button>
-  <button class="cta-button" onclick="trackClick('Download Guide')">
-    Download Our Clinical Trial Capabilities Guide
-  </button>
+  <div id="form-section">
+    <input type="text" id="name" placeholder="Your Full Name" required><br>
+    <input type="email" id="email" placeholder="Your Email" required><br>
+    <input type="text" id="company" placeholder="Your Company (optional)"><br>
+    <button class="submit-button" onclick="submitForm()">Continue</button>
+  </div>
+
+  <div id="cta-section" class="hidden">
+    <button class="cta-button" onclick="trackClick('Start Trial')">
+      Start Your Supplement Trial Today – Discover How We Can Validate Your Claims
+    </button>
+    <button class="cta-button" onclick="trackClick('Free Consultation')">
+      Request a Free Consultation on Designing a Clinical Trial for Your Product
+    </button>
+    <button class="cta-button" onclick="trackClick('Schedule Strategy Session')">
+      Need Human Data? Schedule a Trial Design Strategy Session Now
+    </button>
+    <button class="cta-button" onclick="trackClick('Talk to Director')">
+      Talk to a Study Director About Your Supplement's Clinical Potential
+    </button>
+    <button class="cta-button" onclick="trackClick('Download Guide')">
+      Download Our Clinical Trial Capabilities Guide
+    </button>
+  </div>
 
   <div id="log"></div>
 
   <script>
-    const logDiv = document.getElementById('log');
+    let visitorName = "unknown";
+    let visitorEmail = "unknown";
+    let visitorCompany = "";
 
-    // Get user and action from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const user = urlParams.get('user') || 'unknown';
+    function submitForm() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const company = document.getElementById('company').value.trim();
+
+      if (!name || !email) {
+        alert("Please enter both your name and email.");
+        return;
+      }
+
+      visitorName = name;
+      visitorEmail = email;
+      visitorCompany = company;
+
+      document.getElementById('form-section').style.display = 'none';
+      document.getElementById('cta-section').classList.remove('hidden');
+    }
 
     function trackClick(action) {
       const timestamp = new Date().toLocaleString();
-      const message = `${timestamp}: ${user} clicked '${action}'`;
+      const message = `${timestamp}: ${visitorName} (${visitorEmail}) from ${visitorCompany} clicked '${action}'`;
       console.log(message);
       const p = document.createElement('p');
       p.textContent = message;
-      logDiv.appendChild(p);
+      document.getElementById('log').appendChild(p);
     }
   </script>
 </body>
