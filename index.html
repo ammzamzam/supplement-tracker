@@ -78,31 +78,31 @@
   <div id="log"></div>
 
   <script>
-    let visitorName = "unknown";
-    let visitorEmail = "unknown";
-    let visitorCompany = "";
+    function getUserData() {
+      return {
+        name: document.getElementById('name').value.trim() || 'unknown',
+        email: document.getElementById('email').value.trim() || 'unknown',
+        company: document.getElementById('company').value.trim() || 'unknown'
+      };
+    }
 
     function submitForm() {
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
-      const company = document.getElementById('company').value.trim();
 
       if (!name || !email) {
         alert("Please enter both your name and email.");
         return;
       }
 
-      visitorName = name;
-      visitorEmail = email;
-      visitorCompany = company;
-
       document.getElementById('form-section').style.display = 'none';
       document.getElementById('cta-section').classList.remove('hidden');
     }
 
     function trackClick(action) {
+      const { name, email, company } = getUserData();
       const timestamp = new Date().toLocaleString();
-      const message = `${timestamp}: ${visitorName} (${visitorEmail}) from ${visitorCompany} clicked '${action}'`;
+      const message = `${timestamp}: ${name} (${email}) from ${company} clicked '${action}'`;
       console.log(message);
       const p = document.createElement('p');
       p.textContent = message;
