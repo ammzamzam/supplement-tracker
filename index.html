@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Start Your Supplement Trial</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2em;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    .cta-button {
+      display: block;
+      width: 80%;
+      max-width: 500px;
+      margin: 1em auto;
+      padding: 1em;
+      font-size: 1.1em;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .cta-button:hover {
+      background-color: #0056b3;
+    }
+    #log {
+      margin-top: 2em;
+      color: #555;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Start Your Supplement Trial Journey</h1>
+
+  <button class="cta-button" onclick="trackClick('Start Trial')">
+    Start Your Supplement Trial Today – Discover How We Can Validate Your Claims
+  </button>
+  <button class="cta-button" onclick="trackClick('Free Consultation')">
+    Request a Free Consultation on Designing a Clinical Trial for Your Product
+  </button>
+  <button class="cta-button" onclick="trackClick('Schedule Strategy Session')">
+    Need Human Data? Schedule a Trial Design Strategy Session Now
+  </button>
+  <button class="cta-button" onclick="trackClick('Talk to Director')">
+    Talk to a Study Director About Your Supplement's Clinical Potential
+  </button>
+  <button class="cta-button" onclick="trackClick('Download Guide')">
+    Download Our Clinical Trial Capabilities Guide
+  </button>
+
+  <div id="log"></div>
+
+  <script>
+    const logDiv = document.getElementById('log');
+
+    // Get user and action from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const user = urlParams.get('user') || 'unknown';
+
+    function trackClick(action) {
+      const timestamp = new Date().toLocaleString();
+      const message = `${timestamp}: ${user} clicked '${action}'`;
+      console.log(message);
+      const p = document.createElement('p');
+      p.textContent = message;
+      logDiv.appendChild(p);
+    }
+  </script>
+</body>
+</html>
