@@ -40,81 +40,46 @@
       width: 80%;
       max-width: 400px;
     }
-    #log {
-      display: none;
-    }
   </style>
 </head>
 <body>
   <h1>Start Your Supplement Trial Journey</h1>
 
-  <div id="form-section">
-    <input type="text" id="name" placeholder="Your Full Name" required><br>
-    <input type="email" id="email" placeholder="Your Email" required><br>
-    <input type="text" id="company" placeholder="Your Company (optional)"><br>
-    <button class="submit-button" onclick="submitForm()">Continue</button>
-  </div>
+  <form action="https://formsubmit.co/azamzam@kgkscience.com" method="POST" id="tracker-form">
+    <input type="text" name="Name" placeholder="Your Full Name" required><br>
+    <input type="email" name="Email" placeholder="Your Email" required><br>
+    <input type="text" name="Company" placeholder="Your Company (optional)"><br>
+    <input type="hidden" name="Clicked_Button" id="clicked-button">
+    <button type="button" class="submit-button" onclick="submitForm()">Continue</button>
+  </form>
 
   <div id="cta-section" class="hidden">
-    <button class="cta-button" onclick="trackClick('Start Trial')">
-      Start Your Supplement Trial Today – Discover How We Can Validate Your Claims
-    </button>
-    <button class="cta-button" onclick="trackClick('Free Consultation')">
-      Request a Free Consultation on Designing a Clinical Trial for Your Product
-    </button>
-    <button class="cta-button" onclick="trackClick('Schedule Strategy Session')">
-      Need Human Data? Schedule a Trial Design Strategy Session Now
-    </button>
-    <button class="cta-button" onclick="trackClick('Talk to Director')">
-      Talk to a Study Director About Your Supplement's Clinical Potential
-    </button>
-    <button class="cta-button" onclick="trackClick('Download Guide')">
-      Download Our Clinical Trial Capabilities Guide
-    </button>
+    <button class="cta-button" onclick="submitWithAction('Start Trial')">Start Your Supplement Trial Today</button>
+    <button class="cta-button" onclick="submitWithAction('Free Consultation')">Request a Free Consultation</button>
+    <button class="cta-button" onclick="submitWithAction('Schedule Strategy Session')">Schedule a Trial Design Strategy Session</button>
+    <button class="cta-button" onclick="submitWithAction('Talk to Director')">Talk to a Study Director</button>
+    <button class="cta-button" onclick="submitWithAction('Download Guide')">Download Our Capabilities Guide</button>
   </div>
 
-  <div id="log"></div>
-
   <script>
-    function getUserData() {
-      return {
-        name: document.getElementById('name').value.trim() || 'unknown',
-        email: document.getElementById('email').value.trim() || 'unknown',
-        company: document.getElementById('company').value.trim() || 'unknown'
-      };
-    }
-
     function submitForm() {
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
+      const name = document.querySelector('input[name="Name"]').value.trim();
+      const email = document.querySelector('input[name="Email"]').value.trim();
 
       if (!name || !email) {
         alert("Please enter both your name and email.");
         return;
       }
 
-      document.getElementById('form-section').style.display = 'none';
+      document.getElementById('tracker-form').style.display = 'none';
       document.getElementById('cta-section').classList.remove('hidden');
     }
 
-    function trackClick(action) {
-      const { name, email, company } = getUserData();
-
-      fetch("https://script.google.com/macros/s/AKfycbwwOzp1N0kWkr68ItJgXSANgGg8Z_jnGSsB5Zog4cQZnAueamFQEPdX6fp-nW4L5Z7cdA/exec", {
-        method: "POST",
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          company: company,
-          action: action
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      .then(response => console.log("Submitted successfully"))
-      .catch(error => console.error("Error submitting data:", error));
+    function submitWithAction(actionText) {
+      document.getElementById('clicked-button').value = actionText;
+      document.getElementById('tracker-form').submit();
     }
   </script>
 </body>
 </html>
+
