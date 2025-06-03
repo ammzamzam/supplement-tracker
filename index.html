@@ -13,10 +13,7 @@
     h1 {
       color: #333;
     }
-    .hidden {
-      display: none;
-    }
-    .cta-button, .submit-button {
+    .cta-button {
       display: block;
       width: 80%;
       max-width: 500px;
@@ -30,7 +27,7 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    .cta-button:hover, .submit-button:hover {
+    .cta-button:hover {
       background-color: #0056b3;
     }
     input {
@@ -49,37 +46,21 @@
     <input type="text" name="Name" placeholder="Your Full Name" required><br>
     <input type="email" name="Email" placeholder="Your Email" required><br>
     <input type="text" name="Company" placeholder="Your Company (optional)"><br>
-    <input type="hidden" name="Clicked_Button" id="clicked-button">
-    <button type="button" class="submit-button" onclick="submitForm()">Continue</button>
+    <input type="hidden" name="Clicked_Button" id="clicked-button"><br>
+
+    <button class="cta-button" type="submit" onclick="setAction('Start Trial')">Start Your Supplement Trial Today</button>
+    <button class="cta-button" type="submit" onclick="setAction('Free Consultation')">Request a Free Consultation</button>
+    <button class="cta-button" type="submit" onclick="setAction('Schedule Strategy Session')">Schedule a Trial Design Strategy Session</button>
+    <button class="cta-button" type="submit" onclick="setAction('Talk to Director')">Talk to a Study Director</button>
+    <button class="cta-button" type="submit" onclick="setAction('Download Guide')">Download Our Capabilities Guide</button>
   </form>
 
-  <div id="cta-section" class="hidden">
-    <button class="cta-button" onclick="submitWithAction('Start Trial')">Start Your Supplement Trial Today</button>
-    <button class="cta-button" onclick="submitWithAction('Free Consultation')">Request a Free Consultation</button>
-    <button class="cta-button" onclick="submitWithAction('Schedule Strategy Session')">Schedule a Trial Design Strategy Session</button>
-    <button class="cta-button" onclick="submitWithAction('Talk to Director')">Talk to a Study Director</button>
-    <button class="cta-button" onclick="submitWithAction('Download Guide')">Download Our Capabilities Guide</button>
-  </div>
-
   <script>
-    function submitForm() {
-      const name = document.querySelector('input[name="Name"]').value.trim();
-      const email = document.querySelector('input[name="Email"]').value.trim();
-
-      if (!name || !email) {
-        alert("Please enter both your name and email.");
-        return;
-      }
-
-      document.getElementById('tracker-form').style.display = 'none';
-      document.getElementById('cta-section').classList.remove('hidden');
-    }
-
-    function submitWithAction(actionText) {
-      document.getElementById('clicked-button').value = actionText;
-      document.getElementById('tracker-form').submit();
+    function setAction(value) {
+      document.getElementById('clicked-button').value = value;
     }
   </script>
 </body>
 </html>
+
 
