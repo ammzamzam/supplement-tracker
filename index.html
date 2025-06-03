@@ -99,10 +99,21 @@
 
     function trackClick(action) {
       const { name, email, company } = getUserData();
-      const timestamp = new Date().toLocaleString();
-      const message = `${timestamp}: ${name} (${email}) from ${company} clicked '${action}'`;
-      console.log(message);
-      // Log is hidden from user; this only writes to console for now.
+
+      fetch("https://script.google.com/macros/s/AKfycbwwOzp1N0kWkr68ItJgXSANgGg8Z_jnGSsB5Zog4cQZnAueamFQEPdX6fp-nW4L5Z7cdA/exec", {
+        method: "POST",
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          company: company,
+          action: action
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(response => console.log("Submitted successfully"))
+      .catch(error => console.error("Error submitting data:", error));
     }
   </script>
 </body>
