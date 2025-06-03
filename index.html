@@ -41,9 +41,7 @@
       max-width: 400px;
     }
     #log {
-      margin-top: 2em;
-      color: #555;
-      font-size: 0.9em;
+      display: none;
     }
   </style>
 </head>
@@ -104,9 +102,7 @@
       const timestamp = new Date().toLocaleString();
       const message = `${timestamp}: ${name} (${email}) from ${company} clicked '${action}'`;
       console.log(message);
-      const p = document.createElement('p');
-      p.textContent = message;
-      document.getElementById('log').appendChild(p);
+      // Log is hidden from user; this only writes to console for now.
     }
   </script>
 </body>
